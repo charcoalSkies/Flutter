@@ -1,8 +1,10 @@
 import 'dart:async';
+
 import 'package:flutter/material.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
+
   @override
   State<HomeScreen> createState() => _HomeScreenState();
 }
@@ -17,17 +19,15 @@ class _HomeScreenState extends State<HomeScreen> {
   void initState() {
     // TODO: implement initState
     super.initState();
+
     timer = Timer.periodic(Duration(seconds: 3), (timer) {
       int currentPage = controller.page!.toInt();
       int nextPage = currentPage + 1;
       if (nextPage > 4) {
         nextPage = 0;
       }
-      controller.animateToPage(
-        nextPage,
-        duration: Duration(milliseconds: 400),
-        curve: Curves.linear,
-      );
+      controller.animateToPage(nextPage,
+          duration: Duration(milliseconds: 400), curve: Curves.linear);
     });
   }
 
