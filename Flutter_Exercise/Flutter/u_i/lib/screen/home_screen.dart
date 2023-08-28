@@ -1,4 +1,8 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+
+// Material : 구글 디자인
+// Cuertino : IOS와 비슷한 디자인
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -70,7 +74,28 @@ class _TopPart extends StatelessWidget {
           ),
           IconButton(
             iconSize: 60.0,
-            onPressed: () {},
+            onPressed: () {
+              // dialog
+              showCupertinoDialog(
+                context: context,
+                barrierDismissible: true, // 기본값 false
+                builder: (BuildContext context) {
+                  return Align(
+                    alignment: Alignment.bottomCenter,
+                    child: Container(
+                      color: Colors.white,
+                      height: 300.0,
+                      child: CupertinoDatePicker(
+                        mode: CupertinoDatePickerMode.date,
+                        onDateTimeChanged: (DateTime date) {
+                          print(date);
+                        },
+                      ),
+                    ),
+                  );
+                },
+              );
+            },
             icon: Icon(
               Icons.favorite,
               color: Colors.red,
