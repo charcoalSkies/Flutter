@@ -41,7 +41,6 @@ class _TopPart extends StatelessWidget {
           Text(
             'U & I',
             style: TextStyle(
-              color: Colors.white,
               fontSize: 80.0,
               fontFamily: 'parisienne',
             ),
@@ -51,15 +50,13 @@ class _TopPart extends StatelessWidget {
               Text(
                 '우리 처음 만난날',
                 style: TextStyle(
-                  color: Colors.white,
                   fontSize: 30.0,
                   fontFamily: 'sunflower',
                 ),
               ),
               Text(
-                '2023.08.29',
+                '2023.08.24',
                 style: TextStyle(
-                  color: Colors.white,
                   fontSize: 20.0,
                   fontFamily: 'sunflower',
                 ),
@@ -67,29 +64,27 @@ class _TopPart extends StatelessWidget {
             ],
           ),
           IconButton(
-            iconSize: 60.0,
             onPressed: () {
-              // dialog
+              // Dialog
               showCupertinoDialog(
-                context: context,
-                barrierDismissible: true,
-                builder: (BuildContext context) {
-                  return Align(
-                    alignment: Alignment.bottomCenter,
-                    child: Container(
-                      height: 300.0,
-                      color: Colors.white,
-                      child: CupertinoDatePicker(
-                        mode: CupertinoDatePickerMode.date,
-                        onDateTimeChanged: (DateTime date) {
-                          print(date);
-                        },
+                  context: context,
+                  builder: (BuildContext context) {
+                    return Align(
+                      alignment: Alignment.bottomCenter,
+                      child: Container(
+                        height: 300.0,
+                        color: Colors.white,
+                        child: CupertinoDatePicker(
+                          mode: CupertinoDatePickerMode.date,
+                          onDateTimeChanged: (DateTime time) {
+                            print(time);
+                          },
+                        ),
                       ),
-                    ),
-                  );
-                },
-              );
+                    );
+                  });
             },
+            iconSize: 60.0,
             icon: Icon(
               Icons.favorite,
               color: Colors.red,
@@ -98,7 +93,6 @@ class _TopPart extends StatelessWidget {
           Text(
             'D + 1',
             style: TextStyle(
-              color: Colors.white,
               fontSize: 50.0,
               fontFamily: 'sunflower',
               fontWeight: FontWeight.w700,

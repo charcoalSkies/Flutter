@@ -20,16 +20,17 @@ flutter:
 
   assets:
     - asset/img/
-
-  fonts:
-    - family: parisienne
+  
+  fonts: 
+    - family: 'parisienne'
       fonts:
-        - asset: asset/font/Parisienne-Regular.ttf
+        - asset: 'asset/font/Parisienne-Regular.ttf'
 
-    - family: sunflower
-      fonts: 
-        - asset: asset/font/Sunflower-Light.ttf
-        - asset: asset/font/Sunflower-Medium.ttf
+    - family: 'sunflower'
+      fonts:
+        - asset: 'asset/font/Sunflower-Light.ttf'
+        - asset: 'asset/font/Sunflower-Medium.ttf'
           weight: 500
-        - asset: asset/font/Sunflower-Bold.ttf
+        - asset: 'asset/font/Sunflower-Bold.ttf'
           weight: 700
+
