@@ -24,7 +24,7 @@ class _HomeScreenState extends State<HomeScreen> {
           width: MediaQuery.of(context).size.width,
           child: Column(children: [
             _TopPart(
-              seletedDate: selectedDate,
+              selectedDate: selectedDate,
               onPressed: onHeartClicked,
             ),
             _BottomPart(),
@@ -38,6 +38,7 @@ class _HomeScreenState extends State<HomeScreen> {
     final DateTime now = DateTime.now();
     showCupertinoDialog(
       context: context,
+      barrierDismissible: true,
       builder: (BuildContext context) {
         return Align(
           alignment: Alignment.bottomCenter,
@@ -66,16 +67,17 @@ class _HomeScreenState extends State<HomeScreen> {
 }
 
 class _TopPart extends StatelessWidget {
-  final DateTime seletedDate;
+  final DateTime selectedDate;
   final VoidCallback onPressed;
   _TopPart({
-    required DateTime this.seletedDate,
+    required DateTime this.selectedDate,
     required VoidCallback this.onPressed,
     Key? keys,
   }) : super(key: keys);
 
   @override
   Widget build(BuildContext context) {
+    final now = DateTime.now();
     return Expanded(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -99,7 +101,7 @@ class _TopPart extends StatelessWidget {
                 ),
               ),
               Text(
-                '2023.09.01',
+                '${selectedDate.year}.${selectedDate.month}.${selectedDate.day}',
                 style: TextStyle(
                   color: Colors.white,
                   fontFamily: 'sunflower',
@@ -116,7 +118,7 @@ class _TopPart extends StatelessWidget {
                 color: Colors.red,
               )),
           Text(
-            'D + 1',
+            'D+${DateTime(now.year, now.month, now.day).difference(selectedDate).inDays + 1}',
             style: TextStyle(
               color: Colors.white,
               fontFamily: 'sunflower',
