@@ -9,11 +9,6 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  DateTime selectedDate = DateTime(
-    DateTime.now().year,
-    DateTime.now().month,
-    DateTime.now().day,
-  );
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -22,62 +17,23 @@ class _HomeScreenState extends State<HomeScreen> {
         bottom: false,
         child: Container(
           width: MediaQuery.of(context).size.width,
-          child: Column(children: [
-            _TopPart(
-              selectedDate: selectedDate,
-              onPressed: onHeartClicked,
-            ),
-            _BottomPart(),
-          ]),
+          child: Column(
+            children: [
+              _TopPart(),
+              _BottomPart(),
+            ],
+          ),
         ),
       ),
-    );
-  }
-
-  void onHeartClicked() {
-    final DateTime now = DateTime.now();
-    showCupertinoDialog(
-      context: context,
-      barrierDismissible: true,
-      builder: (BuildContext context) {
-        return Align(
-          alignment: Alignment.bottomCenter,
-          child: Container(
-            color: Colors.white,
-            height: 300.0,
-            child: CupertinoDatePicker(
-              mode: CupertinoDatePickerMode.date,
-              initialDateTime: selectedDate,
-              maximumDate: DateTime(
-                now.year,
-                now.month,
-                now.day,
-              ),
-              onDateTimeChanged: (DateTime date) {
-                setState(() {
-                  selectedDate = date;
-                });
-              },
-            ),
-          ),
-        );
-      },
     );
   }
 }
 
 class _TopPart extends StatelessWidget {
-  final DateTime selectedDate;
-  final VoidCallback onPressed;
-  _TopPart({
-    required DateTime this.selectedDate,
-    required VoidCallback this.onPressed,
-    Key? keys,
-  }) : super(key: keys);
+  const _TopPart({super.key});
 
   @override
   Widget build(BuildContext context) {
-    final now = DateTime.now();
     return Expanded(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -86,8 +42,8 @@ class _TopPart extends StatelessWidget {
             'U & I',
             style: TextStyle(
               color: Colors.white,
-              fontFamily: 'parisienne',
               fontSize: 80.0,
+              fontFamily: 'parisienne',
             ),
           ),
           Column(
@@ -96,35 +52,54 @@ class _TopPart extends StatelessWidget {
                 '우리 처음 만난날',
                 style: TextStyle(
                   color: Colors.white,
-                  fontFamily: 'sunflower',
                   fontSize: 30.0,
+                  fontFamily: 'sunflower',
                 ),
               ),
               Text(
-                '${selectedDate.year}.${selectedDate.month}.${selectedDate.day}',
+                '2023.09.02',
                 style: TextStyle(
                   color: Colors.white,
-                  fontFamily: 'sunflower',
                   fontSize: 20.0,
+                  fontFamily: 'sunflower',
                 ),
               ),
             ],
           ),
           IconButton(
-              onPressed: onPressed,
-              iconSize: 50.0,
-              icon: Icon(
-                Icons.favorite,
-                color: Colors.red,
-              )),
-          Text(
-            'D+${DateTime(now.year, now.month, now.day).difference(selectedDate).inDays + 1}',
-            style: TextStyle(
-              color: Colors.white,
-              fontFamily: 'sunflower',
-              fontSize: 50.0,
-              fontWeight: FontWeight.w700,
+            iconSize: 60.0,
+            onPressed: () {
+              showCupertinoDialog(
+                barrierDismissible: true,
+                context: context,
+                builder: (BuildContext context) {
+                  return Align(
+                    alignment: Alignment.bottomCenter,
+                    child: Container(
+                      height: 300.0,
+                      child: CupertinoDatePicker(
+                        mode: CupertinoDatePickerMode.date,
+                        onDateTimeChanged: (DateTime date) {
+                          print(date);
+                        },
+                      ),
+                    ),
+                  );
+                },
+              );
+            },
+            icon: Icon(
+              Icons.favorite,
+              color: Colors.red,
             ),
+          ),
+          Text(
+            'D + 1',
+            style: TextStyle(
+                color: Colors.white,
+                fontSize: 50.0,
+                fontFamily: 'sunflower',
+                fontWeight: FontWeight.w700),
           ),
         ],
       ),
