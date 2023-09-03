@@ -9,6 +9,11 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  DateTime seletedDate = DateTime(
+    DateTime.now().year,
+    DateTime.now().month,
+    DateTime.now().day,
+  );
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -19,7 +24,10 @@ class _HomeScreenState extends State<HomeScreen> {
           width: MediaQuery.of(context).size.width,
           child: Column(
             children: [
-              _TopPart(),
+              _TopPart(
+                onPressed: onHeartClicked,
+                seletedDate: seletedDate,
+              ),
               _BottomPart(),
             ],
           ),
@@ -27,10 +35,49 @@ class _HomeScreenState extends State<HomeScreen> {
       ),
     );
   }
+
+  void onHeartClicked() {
+    final DateTime now = DateTime(
+      DateTime.now().year,
+      DateTime.now().month,
+      DateTime.now().day,
+    );
+    showCupertinoDialog(
+      context: context,
+      barrierDismissible: true,
+      builder: (BuildContext context) {
+        return Align(
+          alignment: Alignment.bottomCenter,
+          child: Container(
+            height: 300.0,
+            color: Colors.white,
+            child: CupertinoDatePicker(
+              mode: CupertinoDatePickerMode.date,
+              initialDateTime: seletedDate,
+              maximumDate: now,
+              onDateTimeChanged: (DateTime date) {
+                setState(() {
+                  seletedDate = date;
+                  print(seletedDate);
+                });
+              },
+            ),
+          ),
+        );
+      },
+    );
+  }
 }
 
 class _TopPart extends StatelessWidget {
-  const _TopPart({super.key});
+  final DateTime seletedDate;
+  final VoidCallback onPressed;
+
+  _TopPart({
+    required this.seletedDate,
+    required this.onPressed,
+    Key? key,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -42,64 +89,45 @@ class _TopPart extends StatelessWidget {
             'U & I',
             style: TextStyle(
               color: Colors.white,
-              fontSize: 80.0,
               fontFamily: 'parisienne',
+              fontSize: 80.0,
             ),
           ),
           Column(
             children: [
               Text(
-                '우리 처음 만난날',
+                '우리 처음 만난날 ',
                 style: TextStyle(
                   color: Colors.white,
-                  fontSize: 30.0,
                   fontFamily: 'sunflower',
+                  fontSize: 30.0,
                 ),
               ),
               Text(
-                '2023.09.02',
+                '${seletedDate.year}.${seletedDate.month}.${seletedDate.day}',
                 style: TextStyle(
                   color: Colors.white,
-                  fontSize: 20.0,
                   fontFamily: 'sunflower',
+                  fontSize: 20.0,
                 ),
               ),
             ],
           ),
           IconButton(
-            iconSize: 60.0,
-            onPressed: () {
-              showCupertinoDialog(
-                barrierDismissible: true,
-                context: context,
-                builder: (BuildContext context) {
-                  return Align(
-                    alignment: Alignment.bottomCenter,
-                    child: Container(
-                      height: 300.0,
-                      child: CupertinoDatePicker(
-                        mode: CupertinoDatePickerMode.date,
-                        onDateTimeChanged: (DateTime date) {
-                          print(date);
-                        },
-                      ),
-                    ),
-                  );
-                },
-              );
-            },
-            icon: Icon(
-              Icons.favorite,
-              color: Colors.red,
-            ),
-          ),
+              iconSize: 60.0,
+              onPressed: onPressed,
+              icon: Icon(
+                Icons.favorite,
+                color: Colors.red,
+              )),
           Text(
-            'D + 1',
+            'D + ${DateTime.now().difference(seletedDate).inDays + 1}',
             style: TextStyle(
-                color: Colors.white,
-                fontSize: 50.0,
-                fontFamily: 'sunflower',
-                fontWeight: FontWeight.w700),
+              color: Colors.white,
+              fontFamily: 'sunflower',
+              fontSize: 50.0,
+              fontWeight: FontWeight.w700,
+            ),
           ),
         ],
       ),
