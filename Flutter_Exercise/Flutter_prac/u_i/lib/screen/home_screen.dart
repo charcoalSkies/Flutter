@@ -1,6 +1,24 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
+// text: U & I
+// 	size: 80.0
+// 	font: parisienne
+
+// text: 우리 처음 만난날
+// 	size: 30.0
+// 	font: sunflower
+
+// text: 2023.08.24
+// 	size: 20.0
+// 	font: sunflower
+
+// icon_size: 60.0
+
+// text: D + 1
+// 	size: 50.0
+// 	font: sunflower - bold
+
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
 
@@ -9,11 +27,12 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  DateTime seletedDate = DateTime(
+  DateTime selectedDate = DateTime(
     DateTime.now().year,
     DateTime.now().month,
     DateTime.now().day,
   );
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -26,7 +45,7 @@ class _HomeScreenState extends State<HomeScreen> {
             children: [
               _TopPart(
                 onPressed: onHeartClicked,
-                seletedDate: seletedDate,
+                selectedDate: selectedDate,
               ),
               _BottomPart(),
             ],
@@ -37,28 +56,27 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   void onHeartClicked() {
-    final DateTime now = DateTime(
-      DateTime.now().year,
-      DateTime.now().month,
-      DateTime.now().day,
-    );
+    final now = DateTime.now();
     showCupertinoDialog(
-      context: context,
       barrierDismissible: true,
+      context: context,
       builder: (BuildContext context) {
         return Align(
           alignment: Alignment.bottomCenter,
           child: Container(
-            height: 300.0,
             color: Colors.white,
+            height: 300.0,
             child: CupertinoDatePicker(
               mode: CupertinoDatePickerMode.date,
-              initialDateTime: seletedDate,
-              maximumDate: now,
+              initialDateTime: selectedDate,
+              maximumDate: DateTime(
+                now.year,
+                now.month,
+                now.day,
+              ),
               onDateTimeChanged: (DateTime date) {
                 setState(() {
-                  seletedDate = date;
-                  print(seletedDate);
+                  selectedDate = date;
                 });
               },
             ),
@@ -70,11 +88,10 @@ class _HomeScreenState extends State<HomeScreen> {
 }
 
 class _TopPart extends StatelessWidget {
-  final DateTime seletedDate;
+  final DateTime selectedDate;
   final VoidCallback onPressed;
-
   _TopPart({
-    required this.seletedDate,
+    required this.selectedDate,
     required this.onPressed,
     Key? key,
   }) : super(key: key);
@@ -89,43 +106,44 @@ class _TopPart extends StatelessWidget {
             'U & I',
             style: TextStyle(
               color: Colors.white,
-              fontFamily: 'parisienne',
               fontSize: 80.0,
+              fontFamily: 'parisienne',
             ),
           ),
           Column(
             children: [
               Text(
-                '우리 처음 만난날 ',
+                '우리 처음 만난날',
                 style: TextStyle(
                   color: Colors.white,
-                  fontFamily: 'sunflower',
                   fontSize: 30.0,
+                  fontFamily: 'sunflower',
                 ),
               ),
               Text(
-                '${seletedDate.year}.${seletedDate.month}.${seletedDate.day}',
+                '${selectedDate.year}.${selectedDate.month}.${selectedDate.day}',
                 style: TextStyle(
                   color: Colors.white,
-                  fontFamily: 'sunflower',
                   fontSize: 20.0,
+                  fontFamily: 'sunflower',
                 ),
               ),
             ],
           ),
           IconButton(
-              iconSize: 60.0,
-              onPressed: onPressed,
-              icon: Icon(
-                Icons.favorite,
-                color: Colors.red,
-              )),
+            iconSize: 60.0,
+            onPressed: onPressed,
+            icon: Icon(
+              Icons.favorite,
+              color: Colors.red,
+            ),
+          ),
           Text(
-            'D + ${DateTime.now().difference(seletedDate).inDays + 1}',
+            'D + ${DateTime.now().difference(selectedDate).inDays + 1}',
             style: TextStyle(
               color: Colors.white,
-              fontFamily: 'sunflower',
               fontSize: 50.0,
+              fontFamily: 'sunflower',
               fontWeight: FontWeight.w700,
             ),
           ),
@@ -141,9 +159,7 @@ class _BottomPart extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Expanded(
-      child: Image.asset(
-        'asset/img/middle_image.png',
-      ),
+      child: Image.asset('asset/img/middle_image.png'),
     );
   }
 }
