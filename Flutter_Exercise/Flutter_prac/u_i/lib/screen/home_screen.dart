@@ -1,24 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-// text: U & I
-// 	size: 80.0
-// 	font: parisienne
-
-// text: 우리 처음 만난날
-// 	size: 30.0
-// 	font: sunflower
-
-// text: 2023.08.24
-// 	size: 20.0
-// 	font: sunflower
-
-// icon_size: 60.0
-
-// text: D + 1
-// 	size: 50.0
-// 	font: sunflower - bold
-
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
 
@@ -27,7 +9,7 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  DateTime selectedDate = DateTime(
+  DateTime seletedDate = DateTime(
     DateTime.now().year,
     DateTime.now().month,
     DateTime.now().day,
@@ -44,10 +26,10 @@ class _HomeScreenState extends State<HomeScreen> {
           child: Column(
             children: [
               _TopPart(
-                onPressed: onHeartClicked,
-                selectedDate: selectedDate,
+                seletedDate: seletedDate,
+                onPressed: onHeartClocked,
               ),
-              _BottomPart(),
+              const _BottomPart(),
             ],
           ),
         ),
@@ -55,8 +37,9 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-  void onHeartClicked() {
-    final now = DateTime.now();
+  void onHeartClocked() {
+    DateTime now = DateTime.now();
+
     showCupertinoDialog(
       barrierDismissible: true,
       context: context,
@@ -68,7 +51,7 @@ class _HomeScreenState extends State<HomeScreen> {
             height: 300.0,
             child: CupertinoDatePicker(
               mode: CupertinoDatePickerMode.date,
-              initialDateTime: selectedDate,
+              initialDateTime: seletedDate,
               maximumDate: DateTime(
                 now.year,
                 now.month,
@@ -76,7 +59,8 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
               onDateTimeChanged: (DateTime date) {
                 setState(() {
-                  selectedDate = date;
+                  seletedDate = date;
+                  print(seletedDate);
                 });
               },
             ),
@@ -88,10 +72,10 @@ class _HomeScreenState extends State<HomeScreen> {
 }
 
 class _TopPart extends StatelessWidget {
-  final DateTime selectedDate;
+  final DateTime seletedDate;
   final VoidCallback onPressed;
-  _TopPart({
-    required this.selectedDate,
+  const _TopPart({
+    required this.seletedDate,
     required this.onPressed,
     Key? key,
   }) : super(key: key);
@@ -102,7 +86,7 @@ class _TopPart extends StatelessWidget {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
-          Text(
+          const Text(
             'U & I',
             style: TextStyle(
               color: Colors.white,
@@ -112,7 +96,7 @@ class _TopPart extends StatelessWidget {
           ),
           Column(
             children: [
-              Text(
+              const Text(
                 '우리 처음 만난날',
                 style: TextStyle(
                   color: Colors.white,
@@ -121,8 +105,8 @@ class _TopPart extends StatelessWidget {
                 ),
               ),
               Text(
-                '${selectedDate.year}.${selectedDate.month}.${selectedDate.day}',
-                style: TextStyle(
+                '${seletedDate.year}.${seletedDate.month}.${seletedDate.day}',
+                style: const TextStyle(
                   color: Colors.white,
                   fontSize: 20.0,
                   fontFamily: 'sunflower',
@@ -133,14 +117,14 @@ class _TopPart extends StatelessWidget {
           IconButton(
             iconSize: 60.0,
             onPressed: onPressed,
-            icon: Icon(
+            icon: const Icon(
               Icons.favorite,
               color: Colors.red,
             ),
           ),
           Text(
-            'D + ${DateTime.now().difference(selectedDate).inDays + 1}',
-            style: TextStyle(
+            'D + ${DateTime.now().difference(seletedDate).inDays + 1}',
+            style: const TextStyle(
               color: Colors.white,
               fontSize: 50.0,
               fontFamily: 'sunflower',
@@ -159,7 +143,9 @@ class _BottomPart extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Expanded(
-      child: Image.asset('asset/img/middle_image.png'),
+      child: Image.asset(
+        'asset/img/middle_image.png',
+      ),
     );
   }
 }
